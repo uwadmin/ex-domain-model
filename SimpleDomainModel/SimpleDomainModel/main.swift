@@ -63,11 +63,20 @@ public struct Money {
             return Money(amount: Int(convertedAmount), currency: to)
         }
 
-
         public func add(_ to: Money) -> Money {
+            if self.currency == to.currency {
+                return Money(amount: self.amount + to.amount, currency: to.currency)
+            } else {
+                return to.add(_: self.convert(to.currency))
+            }
         }
 
         public func subtract(_ from: Money) -> Money {
+            if self.currency == from.currency {
+                return Money(amount: from.amount - self.amount, currency: from.currency)
+            } else {
+                return self.convert(from.currency).subtract(_: from)
+            }
         }
     }
 
