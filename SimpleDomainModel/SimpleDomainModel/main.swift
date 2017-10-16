@@ -93,12 +93,26 @@ public struct Money {
         }
 
         public init(title: String, type: JobType) {
+            self.title = title
+            self.type = type
         }
 
         open func calculateIncome(_ hours: Int) -> Int {
+            switch self.type {
+            case .Hourly(let hourly):
+                return Int(hourly * Double(hours))
+            case .Salary(let salary):
+                return salary
+            }
         }
 
         open func raise(_ amt: Double) {
+            switch self.type {
+            case .Hourly(let hourly):
+                self.type = JobType.Hourly(hourly + amt)
+            case .Salary(let salary):
+                self.type = JobType.Salary(salary + Int(amt))
+            }
         }
     }
 
