@@ -125,18 +125,31 @@ public struct Money {
         open var age: Int = 0
 
         fileprivate var _job: Job? = nil
+
         open var job: Job? {
             get {
+                return self._job
             }
             set(value) {
+                if (age < 16) {
+                    self._job = nil
+                } else {
+                    self._job = value
+                }
             }
         }
 
         fileprivate var _spouse: Person? = nil
         open var spouse: Person? {
             get {
+                return self._spouse
             }
             set(value) {
+                if (self.age < 18) {
+                    self._spouse = nil
+                } else {
+                    self._spouse = value
+                }
             }
         }
 
@@ -147,6 +160,7 @@ public struct Money {
         }
 
         open func toString() -> String {
+            return "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age) job:\(job) spouse:\(spouse)]"
         }
     }
 
